@@ -19,7 +19,7 @@ namespace DatingApp.Controllers
 
         private readonly DataContext Context;
 
-        public AccountController(DataContext context,ITokenService itokenServivce)
+        public AccountController(DataContext context, ITokenService itokenServivce)
         {
             Context = context;
             this.itokenServivce = itokenServivce;
@@ -44,14 +44,24 @@ namespace DatingApp.Controllers
                 Token = itokenServivce.CreateToken(user)
             };
         }
-
+        [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user= await Context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
-            
+            var user = await Context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+
             if (user == null)
             {
                 return Unauthorized("Invalid Username");
+            }
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i])
+                {
+                    return Unauthorized("Invalid Password");
+                }
             }
             return new UserDto
             {
