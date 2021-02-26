@@ -21,6 +21,7 @@
     "@angular/router": "~11.2.1",
     "angular-route": "^1.8.2",
     "bootstrap": "^4.6.0",
+    "font-awesome": "^4.7.0",
     "ngx": "^2.4.0",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~6.6.0",
