@@ -18,12 +18,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DatingApp.Extensions;
+using DatingApp.Middelware;
 
 namespace DatingApp
 {
     public class Startup
     {
         private readonly IConfiguration config;
+
+        public object[] Exceptionmiddleware { get; private set; }
+
         public Startup(IConfiguration config)
         {
             this.config = config;
@@ -48,11 +52,11 @@ namespace DatingApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

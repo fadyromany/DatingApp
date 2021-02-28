@@ -40,7 +40,7 @@ namespace DatingApp.Controllers
             await Context.SaveChangesAsync();
             return new UserDto
             {
-                Usaname = user.UserName,
+                Username = user.UserName,
                 Token = itokenServivce.CreateToken(user)
             };
         }
@@ -65,7 +65,7 @@ namespace DatingApp.Controllers
             }
             return new UserDto
             {
-                Usaname = user.UserName,
+                Username = user.UserName,
                 Token = itokenServivce.CreateToken(user)
             };
         }

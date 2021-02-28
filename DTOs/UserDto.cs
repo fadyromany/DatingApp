@@ -7,7 +7,7 @@ namespace DatingApp.DTOs
 {
     public class UserDto
     {
-        public String Usaname { get; set; }
+        public String Username { get; set; }
         public String Token { get; set; }
     }
 }
