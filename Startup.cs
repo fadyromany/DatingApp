@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DatingApp.Extensions;
 using DatingApp.Middelware;
+using DatingApp.Helpers;
 
 namespace DatingApp
 {
@@ -38,8 +39,9 @@ namespace DatingApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(config);
-
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(this.config.GetConnectionString("DatingApp"));
